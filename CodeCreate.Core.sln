@@ -33,10 +33,20 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4D43
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{538C42F2-189F-4AE5-92FB-46CBE0899128}"
 	ProjectSection(SolutionItems) = preProject
-		build-job-template.yml = build-job-template.yml
 		.github\workflows\codecreate-core-cd.yml = .github\workflows\codecreate-core-cd.yml
 		.github\workflows\codecreate-core-ci.yml = .github\workflows\codecreate-core-ci.yml
-		release-job-template.yml = release-job-template.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A7F52840-E9BC-49AD-9DEA-7C85830B0E57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1CBB0FB4-B782-435E-BBB3-A0F0EEA57E1F}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\templates\build\action.yml = .github\workflows\templates\build\action.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "release", "release", "{097550C1-CE67-419E-AE00-01F74C6E4491}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\templates\release\action.yml = .github\workflows\templates\release\action.yml
 	EndProjectSection
 EndProject
 Global
@@ -86,6 +96,9 @@ Global
 		{C5EC846D-A018-4FB3-9F30-3F7E1D1BC5A2} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
 		{26096EE1-B118-45AE-BB45-5BCBA90797FC} = {408EB2E6-FAD7-47BF-92E3-0AD4DE1A1798}
 		{538C42F2-189F-4AE5-92FB-46CBE0899128} = {4D43C376-5260-4EE4-B12A-C07CA7844350}
+		{A7F52840-E9BC-49AD-9DEA-7C85830B0E57} = {538C42F2-189F-4AE5-92FB-46CBE0899128}
+		{1CBB0FB4-B782-435E-BBB3-A0F0EEA57E1F} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
+		{097550C1-CE67-419E-AE00-01F74C6E4491} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AA8B55C-42AC-4CD6-9FBE-678A76AF5259}
