@@ -1,0 +1,58 @@
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest 
+    outputs: 
+      Version: ${{ steps.gitversion.outputs.SemVer }}
+      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # fetch-depth is needed for GitVersion
+        
+    # Install and calculate the new version with GitVersion  
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.10.2
+      with:
+        versionSpec: 5.x
+
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.10.2
+      id: gitversion # Step id used as reference for output values
+
+    - name: Display GitVersion outputs
+      run: |
+        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
+        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+    
+    - name: Use .NET Core sdk 7.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.x
+
+    - name: 'Restore packages'
+      run: dotnet restore ${{ inputs.libraryPath }}
+
+    - name: 'Build project'
+      run: dotnet build ${{ inputs.libraryPath }} --no-restore --configuration Release
+
+    - name: Run Unit Tests
+      run: dotnet test ${{ inputs.testsPath }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+      continue-on-error: true
+
+    - name: Publish Code Coverage Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage
+        path: ${{ inputs.testsResultsPath }}/*/coverage.cobertura.xml
+
+    - name: Build and Pack NuGet package
+      run: dotnet pack ${{ inputs.libraryPath }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
+
+    - name: Upload NuGet package to GitHub
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifactName }}
+        path: ${{ inputs.dllPath }}

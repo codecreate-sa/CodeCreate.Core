@@ -33,8 +33,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4D43
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{538C42F2-189F-4AE5-92FB-46CBE0899128}"
 	ProjectSection(SolutionItems) = preProject
+		build-job-template.yml = build-job-template.yml
 		.github\workflows\codecreate-core-cd.yml = .github\workflows\codecreate-core-cd.yml
 		.github\workflows\codecreate-core-ci.yml = .github\workflows\codecreate-core-ci.yml
+		release-job-template.yml = release-job-template.yml
 	EndProjectSection
 EndProject
 Global
