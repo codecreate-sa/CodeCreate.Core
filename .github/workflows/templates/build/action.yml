@@ -23,11 +23,6 @@ runs:
   using: "composite"
   # Defining the action steps
   steps:
-    - name: Checkout Code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0 # fetch-depth is needed for GitVersion
-        
     # Install and calculate the new version with GitVersion  
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.10.2

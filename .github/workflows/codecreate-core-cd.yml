@@ -25,8 +25,13 @@ jobs:
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }} 
 
     steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # fetch-depth is needed for GitVersion
+
     - name: build
-      uses: "./templates/build" # Just need to pass the path from action
+      uses: "./.github/workflows/templates/build" # Just need to pass the path from action
        # Defining the variables required in our action
       with:
         libraryPath: ${{ env.LIBRARY_PATH }}
