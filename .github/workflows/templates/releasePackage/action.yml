@@ -1,0 +1,44 @@
+name: releasePackage
+
+description: Pack the library code and publish the package to GitHub Packages 
+
+inputs:
+  username:
+    description: 'The username to be used to connect to GitHub Packages nuget source'
+    required: true
+  password:
+    description: 'The api key to be used to connect to GitHub Packages nuget source'
+    required: true
+  buildJobName:
+    description: 'The name of the build package job'
+    required: true
+  artifactName:
+    description: 'The build artifact name'
+    required: true
+
+runs:
+  using: "composite"
+  # Defining the action steps
+  steps:
+    - name: Download nuget package artifact
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: ${{ inputs.artifactName }}
+
+    - name: Prep package
+      run: dotnet nuget add source --username ${{ inputs.username }} --password ${{ inputs.password }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/codecreate-sa/index.json"
+      shell: bash
+
+    - name: Push package to GitHub packages
+      if: needs.${{ inputs.buildJobName }}.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
+      run: dotnet nuget push ${{ inputs.artifactName }}/*.nupkg --api-key ${{ inputs.password }} --source "github"
+      shell: bash
+
+    - name: Create Release
+      if: needs.${{ inputs.buildJobName }}.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ needs.${{ inputs.buildJobName }}.outputs.Version }}
+        name: Release ${{ needs.${{ inputs.buildJobName }}.outputs.Version }}
+        artifacts: "${{ inputs.artifactName }}/*"
+        token: ${{ inputs.password }}

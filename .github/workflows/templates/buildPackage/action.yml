@@ -1,6 +1,6 @@
-name: build
+name: buildPackage
 
-description: build
+description: Build the library code and run the tests
 
 inputs:
   libraryPath:

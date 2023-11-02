@@ -39,14 +39,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A7F52840-E9BC-49AD-9DEA-7C85830B0E57}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{1CBB0FB4-B782-435E-BBB3-A0F0EEA57E1F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "buildPackage", "buildPackage", "{BD76CBF4-9063-4478-B39A-C47D9A487558}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\templates\build\action.yml = .github\workflows\templates\build\action.yml
+		.github\workflows\templates\buildPackage\action.yml = .github\workflows\templates\buildPackage\action.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "release", "release", "{097550C1-CE67-419E-AE00-01F74C6E4491}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "releasePackage", "releasePackage", "{E0BFC67B-3D39-42D8-8A2A-A9A63E971F21}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\templates\release\action.yml = .github\workflows\templates\release\action.yml
+		.github\workflows\templates\releasePackage\action.yml = .github\workflows\templates\releasePackage\action.yml
 	EndProjectSection
 EndProject
 Global
@@ -97,8 +97,8 @@ Global
 		{26096EE1-B118-45AE-BB45-5BCBA90797FC} = {408EB2E6-FAD7-47BF-92E3-0AD4DE1A1798}
 		{538C42F2-189F-4AE5-92FB-46CBE0899128} = {4D43C376-5260-4EE4-B12A-C07CA7844350}
 		{A7F52840-E9BC-49AD-9DEA-7C85830B0E57} = {538C42F2-189F-4AE5-92FB-46CBE0899128}
-		{1CBB0FB4-B782-435E-BBB3-A0F0EEA57E1F} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
-		{097550C1-CE67-419E-AE00-01F74C6E4491} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
+		{BD76CBF4-9063-4478-B39A-C47D9A487558} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
+		{E0BFC67B-3D39-42D8-8A2A-A9A63E971F21} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AA8B55C-42AC-4CD6-9FBE-678A76AF5259}
