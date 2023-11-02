@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Core.Tests.Unit"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Logging", "lib\CodeCreate.Logging\CodeCreate.Logging.csproj", "{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Logging.Serilog", "lib\CodeCreate.Logging.Serilog\CodeCreate.Logging.Serilog.csproj", "{63BF47D9-D337-4D80-BE15-75A7935820FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63BF47D9-D337-4D80-BE15-75A7935820FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63BF47D9-D337-4D80-BE15-75A7935820FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63BF47D9-D337-4D80-BE15-75A7935820FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63BF47D9-D337-4D80-BE15-75A7935820FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +60,7 @@ Global
 		{FAAB7B96-7022-4E34-9E5B-10083DC961B4} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
 		{4B9B3C9D-94E3-4236-A37E-F4BEE6B1A1BF} = {408EB2E6-FAD7-47BF-92E3-0AD4DE1A1798}
 		{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
+		{63BF47D9-D337-4D80-BE15-75A7935820FB} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AA8B55C-42AC-4CD6-9FBE-678A76AF5259}
