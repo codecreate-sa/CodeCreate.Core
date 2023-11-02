@@ -47,6 +47,9 @@ jobs:
     if: github.ref == 'refs/heads/main' # Only run job if on the main branch   
     
     steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
     - name: releasePackage
       uses: "./.github/workflows/templates/releasePackage" # Just need to pass the path from action
        # Defining the variables required in our action
