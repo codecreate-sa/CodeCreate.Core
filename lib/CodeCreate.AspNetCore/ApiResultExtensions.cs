@@ -3,12 +3,12 @@
 namespace CodeCreate.AspNetCore
 {
     /// <summary>
-    /// Extension methods for the ApiResult construct
+    /// 
     /// </summary>
     public static class ApiResultExtensions
     {
         /// <summary>
-        /// The AsActionResult method
+        /// 
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
