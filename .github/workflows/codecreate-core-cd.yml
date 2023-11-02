@@ -1,13 +1,7 @@
-name: codecreate-core
+name: codecreate-core-cd
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'lib/CodeCreate.Core/**'
-      - 'tests/CodeCreate.Core.Tests.Unit/**'
   push:
     branches:
       - main
@@ -16,9 +10,9 @@ on:
       - 'tests/CodeCreate.Core.Tests.Unit/**'
 
 env:
+  DLL_PATH: 'lib/CodeCreate.Core/bin/Release'
   LIBRARY_PATH: 'lib/CodeCreate.Core/CodeCreate.Core.csproj'
   TESTS_PATH: 'tests/CodeCreate.Core.Tests.Unit/CodeCreate.Core.Tests.Unit.csproj'
-  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output\CodeCreate.Core
 
 jobs:
   build:
@@ -64,6 +58,12 @@ jobs:
       run: dotnet test ${{ env.TESTS_PATH }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
       continue-on-error: true
 
+    - name: Publish Code Coverage Report
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage
+        path: TestResults/*/coverage.cobertura.xml
+
     - name: Build and Pack NuGet package
       run: dotnet pack ${{ env.LIBRARY_PATH }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
 
@@ -71,7 +71,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: codeCreatePackage
-        path: lib/CodeCreate.Core/bin/Release
+        path: ${{ env.DLL_PATH }}
         
   release:
     runs-on: ubuntu-latest    
@@ -85,11 +85,11 @@ jobs:
         name: codeCreatePackage
 
     - name: Prep package
-      run: dotnet nuget add source --username dpnevmatikos --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/codecreate-sa/index.json"
+      run: dotnet nuget add source --username ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_USERNAME }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/codecreate-sa/index.json"
     
     - name: Push package to GitHub packages 
       if: needs.build.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
-      run: dotnet nuget push codeCreatePackage/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+      run: dotnet nuget push codeCreatePackage/*.nupkg --api-key ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_PASSWORD }} --source "github"
     
     - name: Create Release
       if: needs.build.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change
