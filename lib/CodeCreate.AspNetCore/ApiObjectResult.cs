@@ -1,20 +1,25 @@
 ﻿using System;
-using CodeCreate.Core;
-using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+
+using CodeCreate.Core;
 
 namespace CodeCreate.AspNetCore
 {
     /// <summary>
-    /// The ApiObjectResult class
+    ///
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public class ApiObjectResult<T> : ObjectResult
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ApiResult<T> _result;
 
         /// <summary>
-        /// ApiObjectResult constructor
+        ///
         /// </summary>
         /// <param name="result"></param>
         public ApiObjectResult(ApiResult<T> result) : base(result)
@@ -45,7 +50,7 @@ namespace CodeCreate.AspNetCore
         }
 
         /// <summary>
-        /// The OnFormatting method
+        ///
         /// </summary>
         /// <param name="context"></param>
         public override void OnFormatting(ActionContext context)
@@ -57,7 +62,8 @@ namespace CodeCreate.AspNetCore
 
             base.OnFormatting(context);
 
-            context.HttpContext.Response.Headers[Constants.XAppEventIdHeaderName] = $"{_result.EventId}";
+            context.HttpContext.Response.Headers[
+                Constants.AppEventIdHeaderName] = $"{_result.EventId}";
         }
     }
 }

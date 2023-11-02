@@ -3,12 +3,12 @@
 namespace CodeCreate.Logging.Extensions
 {
     /// <summary>
-    /// Extension methods for the LogEntry construct
+    ///
     /// </summary>
     public static class LogEntryExtensions
     {
         /// <summary>
-        /// The CreateFailedResult extension method
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="this"></param>

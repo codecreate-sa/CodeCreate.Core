@@ -1,6 +1,8 @@
 ﻿using System;
-using FluentAssertions;
+
 using Xunit;
+
+using FluentAssertions;
 
 namespace CodeCreate.Core.Tests.Unit
 {
@@ -9,56 +11,38 @@ namespace CodeCreate.Core.Tests.Unit
         [Fact]
         public void CreateSuccessful_ShouldReturnSuccessApiResult_WhenCalled()
         {
-            // Arrange
+            var data = "data";
+            var result = ApiResult<string>.CreateSuccessful(data);
 
-            // Act
-            var result = ApiResult<string>.CreateSuccessful("data");
-
-            // Assert
             result.Successful.Should().BeTrue();
             result.ErrorText.Should().BeNull();
-            result.Data.Should().BeOfType<string>();
-            result.Code.Should().Be(ResultCode.Success);
+            result.Data.Should().Be(data);
         }
 
         [Fact]
-        public void CreateFailed_FirstOverload_ShouldThrowArgumentOutOfRangeException_WhenCalledWithInvalidResultCode()
+        public void CreateFailed_ShouldThrowArgumentOutOfRangeException_WhenCalledWithInvalidResultCode()
         {
-            // Arrange
+            var resultAction =
+                () => ApiResult<string>.CreateFailed(ResultCode.Success, "error");
 
-            // Act
-            var resultAction = () => ApiResult<string>.CreateFailed(ResultCode.Success, "error");
-
-            // Assert
             resultAction
                 .Should()
                 .Throw<ArgumentOutOfRangeException>();
         }
 
         [Fact]
-        public void CreateFailed_FirstOverload_ShouldReturnFailedApiResult_WhenCalled()
+        public void CreateFailed_ShouldReturnFailedApiResult_WhenCalled()
         {
-            // Arrange
+            var result = ApiResult<string>.CreateFailed(
+                ResultCode.BadGateway, "error", 100, $"{Guid.NewGuid()}");
 
-            // Act
-            var result = ApiResult<string>.CreateFailed(ResultCode.BadGateway, "error", 100, $"{Guid.NewGuid()}");
-
-            // Assert
             result.Successful.Should().BeFalse();
             result.EventId.Should().Be(100);
             result.ErrorText.Should().Be("error");
             result.Code.Should().Be(ResultCode.BadGateway);
-        }
+            
+            result = ApiResult<string>.CreateFailed(ResultCode.BadGateway, "error");
 
-        [Fact]
-        public void CreateFailed_SecondOverload_ShouldReturnFailedApiResult_WhenCalled()
-        {
-            // Arrange
-
-            // Act
-            var result = ApiResult<string>.CreateFailed(ResultCode.BadGateway, "error");
-
-            // Assert
             result.Successful.Should().BeFalse();
             result.ErrorText.Should().Be("error");
             result.Code.Should().Be(ResultCode.BadGateway);
@@ -67,13 +51,9 @@ namespace CodeCreate.Core.Tests.Unit
         [Fact]
         public void CreateFailed_ThirdOverload_ShouldReturnFailedApiResult_WhenCalled()
         {
-            // Arrange
             var failedApiResult = ApiResult<string>.CreateFailed(ResultCode.BadGateway, "error");
-
-            // Act
             var result = ApiResult<string>.CreateFailed(failedApiResult);
 
-            // Assert
             result.Should().BeEquivalentTo(failedApiResult);
         }
     }

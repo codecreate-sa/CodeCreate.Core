@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
+using System.Collections.Generic;
+
+using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.MSSqlServer;
-using Serilog;
 
 namespace CodeCreate.Logging.Serilog
 {
@@ -26,9 +27,9 @@ namespace CodeCreate.Logging.Serilog
 
             var sinkOptions = new MSSqlServerSinkOptions 
             {
-                TableName = Constants.MSSqlServerSink.TableName,
-                SchemaName = Constants.MSSqlServerSink.SchemaName,
-                BatchPostingLimit = Constants.MSSqlServerSink.BatchPostingLimit
+                TableName = Constants.MsSqlServerSink.TableName,
+                SchemaName = Constants.MsSqlServerSink.SchemaName,
+                BatchPostingLimit = Constants.MsSqlServerSink.BatchPostingLimit
             };
 
             var columnOpts = new ColumnOptions();
@@ -44,14 +45,14 @@ namespace CodeCreate.Logging.Serilog
                 new SqlColumn
                 {
                     AllowNull = true,
-                    ColumnName = Constants.SqlColumnName.CorrelationId,
+                    ColumnName = Constants.MsSqlServerSink.CorrelationIdColumn,
                     DataType = SqlDbType.NVarChar
                 },
                 new SqlColumn
                 {
                     AllowNull = true,
-                    ColumnName = Constants.SqlColumnName.AppEventId,
-                    DataType = SqlDbType.Int                    
+                    ColumnName = Constants.MsSqlServerSink.AppEventIdColumn,
+                    DataType = SqlDbType.Int
                 }
             };
 

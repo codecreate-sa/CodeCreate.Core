@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Serilog;
 
 namespace CodeCreate.Logging.Serilog
@@ -8,12 +9,18 @@ namespace CodeCreate.Logging.Serilog
     /// </summary>
     public class SerilogLoggerService : ILoggerService
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly ICorrelationIdProvider _correlationIdProvider;
 
-        private const string LogMessage = Constants.LogMessageTemplate;
+        /// <summary>
+        /// 
+        /// </summary>
+        private const string _messageTemplate = Constants.LogMessage.LogMessageTemplate;
 
         /// <summary>
-        /// The SerilogLoggerService constructor
+        ///
         /// </summary>
         /// <param name="correlationIdProvider"></param>
         public SerilogLoggerService(ICorrelationIdProvider correlationIdProvider)
@@ -22,7 +29,7 @@ namespace CodeCreate.Logging.Serilog
         }
 
         /// <summary>
-        /// An overload of the LogError method
+        ///
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
@@ -32,7 +39,7 @@ namespace CodeCreate.Logging.Serilog
         }
 
         /// <summary>
-        /// An overload of the LogError method
+        ///
         /// </summary>
         /// <param name="message"></param>
         /// <param name="data"></param>
@@ -43,7 +50,7 @@ namespace CodeCreate.Logging.Serilog
         }
 
         /// <summary>
-        /// An overload of the LogError method
+        ///
         /// </summary>
         /// <param name="message"></param>
         /// <param name="appEventId"></param>
@@ -55,20 +62,21 @@ namespace CodeCreate.Logging.Serilog
         }
 
         /// <summary>
-        /// An overload of the LogError method
+        ///
         /// </summary>
         /// <param name="ex"></param>
         /// <param name="message"></param>
         /// <param name="appEventId"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public LogEntry LogError(Exception ex, string message, int? appEventId = null, object? data = null)
+        public LogEntry LogError(Exception ex, string message,
+            int? appEventId = null, object? data = null)
         {
             return LogErrorInternal(ex, message, appEventId, data);
         }
 
         /// <summary>
-        /// An overload of the LogInformation method
+        ///
         /// </summary>
         /// <param name="message"></param>
         /// <param name="data"></param>
@@ -79,41 +87,40 @@ namespace CodeCreate.Logging.Serilog
         }
 
         /// <summary>
-        /// An overload of the LogInformation method
+        ///
         /// </summary>
         /// <param name="message"></param>
         /// <param name="appEventId"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public LogEntry LogInformation(string message, int appEventId, object? data = null)
+        public LogEntry LogInformation(string message, int appEventId,
+            object? data = null)
         {
             return LogInformationInternal(message, appEventId, data);
         }
 
-        private LogEntry LogErrorInternal(Exception? ex, string message, int? appEventId, object? data)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <param name="message"></param>
+        /// <param name="appEventId"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private LogEntry LogErrorInternal(Exception? ex, string message,
+            int? appEventId, object? data)
         {
             var correlationId = _correlationIdProvider.GetCorrelationId();
 
             if (ex == null) 
             {
-                Log.Error(
-                    LogMessage,
-                    message, 
-                    data, 
-                    appEventId, 
-                    correlationId
-                );
-            } 
-            else 
+                Log.Error(_messageTemplate, message, data, 
+                    appEventId, correlationId);
+            }
+            else
             {
-                Log.Error(
-                    ex, 
-                    LogMessage,
-                    message, 
-                    data, 
-                    appEventId, 
-                    correlationId
-                );
+                Log.Error(ex, _messageTemplate, message, 
+                    data, appEventId, correlationId);
             }
 
             return new LogEntry 
@@ -124,17 +131,20 @@ namespace CodeCreate.Logging.Serilog
             };
         }
 
-        private LogEntry LogInformationInternal(string message, int? appEventId, object? data)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="appEventId"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private LogEntry LogInformationInternal(string message, int? appEventId,
+            object? data)
         {
             var correlationId = _correlationIdProvider.GetCorrelationId();
 
-            Log.Information(
-                LogMessage,
-                message, 
-                data, 
-                appEventId, 
-                correlationId
-            );
+            Log.Information(_messageTemplate, message, data, 
+                appEventId, correlationId);
 
             return new LogEntry 
             {

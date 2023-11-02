@@ -1,7 +1,7 @@
 ﻿namespace CodeCreate.Logging
 {
     /// <summary>
-    /// The ICorrelationIdProvider interface
+    /// 
     /// </summary>
     public interface ICorrelationIdProvider
     {
@@ -9,10 +9,10 @@
         /// The GetCorrelationId method
         /// </summary>
         /// <returns></returns>
-        public string GetCorrelationId();
+        public string? GetCorrelationId();
 
         /// <summary>
-        /// The SetCorrelationId method
+        ///
         /// </summary>
         /// <param name="correlationId"></param>
         public void SetCorrelationId(string correlationId);

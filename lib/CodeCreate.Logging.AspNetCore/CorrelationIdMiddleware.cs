@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Http;
 
 namespace CodeCreate.Logging.AspNetCore
@@ -9,6 +10,9 @@ namespace CodeCreate.Logging.AspNetCore
     /// </summary>
     public class CorrelationIdMiddleware
     {
+        /// <summary>
+        /// 
+        /// </summary>
         private readonly RequestDelegate _next;
 
         /// <summary>
@@ -49,6 +53,11 @@ namespace CodeCreate.Logging.AspNetCore
             await _next(context);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
         private static string CreateCorrelationId(HttpContext context)
         {
             var headerValue = context?

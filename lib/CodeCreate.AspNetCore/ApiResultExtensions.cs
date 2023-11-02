@@ -8,7 +8,7 @@ namespace CodeCreate.AspNetCore
     public static class ApiResultExtensions
     {
         /// <summary>
-        /// The AsActionResult method
+        ///
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="result"></param>
