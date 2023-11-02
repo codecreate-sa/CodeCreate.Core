@@ -1,23 +1,23 @@
 ﻿namespace CodeCreate.Logging
 {
     /// <summary>
-    /// The LogEntry class
+    /// 
     /// </summary>
     public class LogEntry
     {
         /// <summary>
-        /// The message of the log entry
+        /// 
         /// </summary>
-        public string Message { get; set; } = default!;
+        public string? Message { get; set; }
 
         /// <summary>
-        /// The app event id of the log entry
+        /// 
         /// </summary>
-        public int? AppEventId { get; set; } = default!;
+        public int? AppEventId { get; set; }
 
         /// <summary>
-        /// The correlation id of the log entry
+        /// 
         /// </summary>
-        public string CorrelationId { get; set; } = default!;
+        public string? CorrelationId { get; set; }
     }
 }

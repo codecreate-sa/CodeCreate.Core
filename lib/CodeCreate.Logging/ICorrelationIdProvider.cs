@@ -9,12 +9,12 @@
         /// The GetCorrelationId method
         /// </summary>
         /// <returns></returns>
-        public string GetCorrelationId();
+        public string? GetCorrelationId();
 
         /// <summary>
         /// The SetCorrelationId method
         /// </summary>
         /// <param name="correlationId"></param>
-        public void SetCorrelationId(string correlationId);
+        public void SetCorrelationId(string? correlationId);
     }
 }
