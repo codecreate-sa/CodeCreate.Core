@@ -56,5 +56,4 @@ jobs:
       with:
         username: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_USERNAME }}
         password: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_PASSWORD }}
-        buildJobName: 'buildPackage'
         artifactName: ${{ env.ARTIFACT_NAME }}

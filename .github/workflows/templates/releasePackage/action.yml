@@ -9,9 +9,6 @@ inputs:
   password:
     description: 'The api key to be used to connect to GitHub Packages nuget source'
     required: true
-  buildJobName:
-    description: 'The name of the build package job'
-    required: true
   artifactName:
     description: 'The build artifact name'
     required: true
@@ -30,15 +27,15 @@ runs:
       shell: bash
 
     - name: Push package to GitHub packages
-      if: needs.${{ inputs.buildJobName }}.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
+      if: needs.buildPackage.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
       run: dotnet nuget push ${{ inputs.artifactName }}/*.nupkg --api-key ${{ inputs.password }} --source "github"
       shell: bash
 
     - name: Create Release
-      if: needs.${{ inputs.buildJobName }}.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
+      if: needs.buildPackage.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ needs.${{ inputs.buildJobName }}.outputs.Version }}
-        name: Release ${{ needs.${{ inputs.buildJobName }}.outputs.Version }}
+        tag: ${{ needs.buildPackage.outputs.Version }}
+        name: Release ${{ needs.buildPackage.outputs.Version }}
         artifacts: "${{ inputs.artifactName }}/*"
         token: ${{ inputs.password }}
