@@ -68,10 +68,10 @@ jobs:
       run: dotnet pack ${{ env.LIBRARY_PATH }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
 
     - name: Upload NuGet package to GitHub
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: codeCreatePackage
-        path: CodeCreate.Core\lib\CodeCreate.Core\bin\Release
+        path: CodeCreate.Core/CodeCreate.Core/lib/CodeCreate.Core/bin/Release
         
   release:
     runs-on: ubuntu-latest    
