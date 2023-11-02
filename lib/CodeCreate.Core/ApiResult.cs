@@ -83,12 +83,8 @@ namespace CodeCreate.Core
         /// <returns></returns>
         public static ApiResult<T> CreateFailed<Y>(ApiResult<Y> result)
         {
-            return CreateFailed(
-                result.Code, 
-                result.ErrorText,
-                result.EventId, 
-                result.CorrelationId
-            );
+            return CreateFailed(result.Code, result.ErrorText,
+                result.EventId, result.CorrelationId);
         }
 
         /// <summary>
