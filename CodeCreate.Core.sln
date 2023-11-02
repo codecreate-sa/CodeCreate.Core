@@ -15,19 +15,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{061890F2-16E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{408EB2E6-FAD7-47BF-92E3-0AD4DE1A1798}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Core", "lib\CodeCreate.Core\CodeCreate.Core.csproj", "{0A7D26B8-5960-4263-AF1F-A0B6479D5438}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.Core", "lib\CodeCreate.Core\CodeCreate.Core.csproj", "{0A7D26B8-5960-4263-AF1F-A0B6479D5438}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.AspNetCore", "lib\CodeCreate.AspNetCore\CodeCreate.AspNetCore.csproj", "{FAAB7B96-7022-4E34-9E5B-10083DC961B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.AspNetCore", "lib\CodeCreate.AspNetCore\CodeCreate.AspNetCore.csproj", "{FAAB7B96-7022-4E34-9E5B-10083DC961B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Core.Tests.Unit", "tests\CodeCreate.Core.Tests.Unit\CodeCreate.Core.Tests.Unit.csproj", "{4B9B3C9D-94E3-4236-A37E-F4BEE6B1A1BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.Core.Tests.Unit", "tests\CodeCreate.Core.Tests.Unit\CodeCreate.Core.Tests.Unit.csproj", "{4B9B3C9D-94E3-4236-A37E-F4BEE6B1A1BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Logging", "lib\CodeCreate.Logging\CodeCreate.Logging.csproj", "{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.Logging", "lib\CodeCreate.Logging\CodeCreate.Logging.csproj", "{4BB47BFF-16AB-4CB0-9CC9-DB9B0B65F28D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Logging.Serilog", "lib\CodeCreate.Logging.Serilog\CodeCreate.Logging.Serilog.csproj", "{63BF47D9-D337-4D80-BE15-75A7935820FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.Logging.Serilog", "lib\CodeCreate.Logging.Serilog\CodeCreate.Logging.Serilog.csproj", "{63BF47D9-D337-4D80-BE15-75A7935820FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Logging.AspNetCore", "lib\CodeCreate.Logging.AspNetCore\CodeCreate.Logging.AspNetCore.csproj", "{C5EC846D-A018-4FB3-9F30-3F7E1D1BC5A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.Logging.AspNetCore", "lib\CodeCreate.Logging.AspNetCore\CodeCreate.Logging.AspNetCore.csproj", "{C5EC846D-A018-4FB3-9F30-3F7E1D1BC5A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.AspNetCore.Tests.Unit", "tests\CodeCreate.AspNetCore.Tests.Unit\CodeCreate.AspNetCore.Tests.Unit.csproj", "{26096EE1-B118-45AE-BB45-5BCBA90797FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeCreate.AspNetCore.Tests.Unit", "tests\CodeCreate.AspNetCore.Tests.Unit\CodeCreate.AspNetCore.Tests.Unit.csproj", "{26096EE1-B118-45AE-BB45-5BCBA90797FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4D43C376-5260-4EE4-B12A-C07CA7844350}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{538C42F2-189F-4AE5-92FB-46CBE0899128}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codecreate-core.yml = .github\workflows\codecreate-core.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +82,7 @@ Global
 		{63BF47D9-D337-4D80-BE15-75A7935820FB} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
 		{C5EC846D-A018-4FB3-9F30-3F7E1D1BC5A2} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
 		{26096EE1-B118-45AE-BB45-5BCBA90797FC} = {408EB2E6-FAD7-47BF-92E3-0AD4DE1A1798}
+		{538C42F2-189F-4AE5-92FB-46CBE0899128} = {4D43C376-5260-4EE4-B12A-C07CA7844350}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AA8B55C-42AC-4CD6-9FBE-678A76AF5259}

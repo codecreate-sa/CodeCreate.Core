@@ -1,0 +1,101 @@
+name: codecreate-core
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'lib/CodeCreate.Core/**'
+      - 'tests/CodeCreate.Core.Tests.Unit/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'lib/CodeCreate.Core/**'
+      - 'tests/CodeCreate.Core.Tests.Unit/**'
+
+env:
+  LIBRARY_PATH: 'lib/CodeCreate.Core/CodeCreate.Core.csproj'
+  TESTS_PATH: 'tests/CodeCreate.Core.Tests.Unit/CodeCreate.Core.Tests.Unit.csproj'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace }}\output\CodeCreate.Core
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest 
+    outputs: 
+      Version: ${{ steps.gitversion.outputs.SemVer }}
+      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }} 
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # fetch-depth is needed for GitVersion
+        
+    # Install and calculate the new version with GitVersion  
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0.10.2
+      with:
+        versionSpec: 5.x
+
+    - name: Determine Version
+      uses: gittools/actions/gitversion/execute@v0.10.2
+      id: gitversion # Step id used as reference for output values
+
+    - name: Display GitVersion outputs
+      run: |
+        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
+        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+    
+    - name: Use .NET Core sdk 7.x
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 7.x
+
+    - name: 'Restore packages'
+      run: dotnet restore ${{ env.LIBRARY_PATH }}
+
+    - name: 'Build project'
+      run: dotnet build ${{ env.LIBRARY_PATH }} --no-restore --configuration Release
+
+    - name: Run Unit Tests
+      run: dotnet test ${{ env.TESTS_PATH }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+      continue-on-error: true
+
+    - name: Build and Pack NuGet package
+      run: dotnet pack ${{ env.LIBRARY_PATH }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
+
+    - name: Upload NuGet package to GitHub
+      uses: actions/upload-artifact@v2
+      with:
+        name: codeCreatePackage
+        path: CodeCreate.Core/CodeCreate.Core/bin/Release/ 
+        
+  release:
+    runs-on: ubuntu-latest    
+    needs: build
+    if: github.ref == 'refs/heads/main' # Only run job if on the main branch   
+    
+    steps:  
+    - name: Download nuget package artifact
+      uses: actions/download-artifact@v1.0.0
+      with:
+        name: codeCreatePackage
+
+    - name: Prep package
+      run: dotnet nuget add source --username dpnevmatikos --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/codecreate-sa/index.json"
+    
+    - name: Push package to GitHub packages 
+      if: needs.build.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change  
+      run: dotnet nuget push codeCreatePackage/*.nupkg --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+    
+    - name: Create Release
+      if: needs.build.outputs.CommitsSinceVersionSource > 0 # Only release if there has been a commit/version change
+      uses: ncipollo/release-action@v1
+      with:
+        tag: ${{ needs.build.outputs.Version }}
+        name: Release ${{ needs.build.outputs.Version }}
+        artifacts: "codeCreatePackage/*"
+        token: ${{ secrets.GITHUB_TOKEN }}
