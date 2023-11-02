@@ -94,7 +94,7 @@ namespace CodeCreate.Core
         /// <returns></returns>
         public static ApiResult<T> CreateSuccessful(T? data)
         {
-            return new ApiResult<T> 
+            return new ApiResult<T>()
             {
                 Data = data,
                 Code = ResultCode.Success
