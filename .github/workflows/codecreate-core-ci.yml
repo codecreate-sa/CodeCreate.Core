@@ -11,6 +11,7 @@ on:
 env:
   LIBRARY_PATH: 'lib/CodeCreate.Core/CodeCreate.Core.csproj'
   TESTS_PATH: 'tests/CodeCreate.Core.Tests.Unit/CodeCreate.Core.Tests.Unit.csproj'
+  TESTS_RESULTS_PATH: 'tests/CodeCreate.Core.Tests.Unit/TestResults'
 
 jobs:
   build:
@@ -21,20 +22,11 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
         
-    - name: Use .NET Core sdk 7.x
-      uses: actions/setup-dotnet@v1
+    - name: buildPackage
+      id: buildPackage
+      uses: "./.github/workflows/templates/buildPackage" # Just need to pass the path from action
+      # Defining the variables required in our action
       with:
-        dotnet-version: 7.x
-
-    - name: 'Build project'
-      run: dotnet build ${{ env.LIBRARY_PATH }} --configuration Release
-
-    - name: Run Unit Tests
-      run: dotnet test ${{ env.TESTS_PATH }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
-      continue-on-error: true
-
-    - name: Publish Code Coverage Report
-      uses: actions/upload-artifact@v2
-      with:
-        name: code-coverage
-        path: tests/CodeCreate.Core.Tests.Unit/TestResults/*/coverage.cobertura.xml
+        libraryPath: ${{ env.LIBRARY_PATH }}
+        testsPath: ${{ env.TESTS_PATH }}
+        testsResultsPath: ${{ env.TESTS_RESULTS_PATH }}

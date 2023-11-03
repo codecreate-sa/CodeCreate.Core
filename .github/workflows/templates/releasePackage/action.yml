@@ -1,6 +1,6 @@
 name: releasePackage
 
-description: Pack the library code and publish the package to GitHub Packages 
+description: Add the GitHub Packages nuget source and publish the package 
 
 inputs:
   username:
@@ -13,7 +13,7 @@ inputs:
     description: 'The build artifact name'
     required: true
   commitsSinceVersionSource: 
-    description: 'Number of commits since version source'
+    description: 'The number of commits since version source'
     required: true
   buildPackageVersion:
     description: 'The build package version'

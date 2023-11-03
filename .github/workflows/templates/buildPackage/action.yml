@@ -1,66 +1,32 @@
 name: buildPackage
 
-description: Build the library code and run the tests
+description: Build library code and run tests
 
 inputs:
   libraryPath:
     description: 'The path to the library .csproj file'
     required: true
   testsPath:
-    description: 'The path to the unit tests .csproj file of the library'
+    description: 'The path to the unit tests .csproj file guarding the library'
     required: true
   testsResultsPath:
     description: 'The path to the unit tests results folder'
     required: true
-  artifactName:
-    description: 'The build artifact name'
-    required: true
-  dllPath:
-    description: 'The path to the dll'
-    required: true
-
-outputs:
-  buildPackageVersion:
-    description: "The version of the build package"
-    value: ${{ steps.gitversion.outputs.SemVer }}
-  commitsSinceVersionSource:
-    description: "The number of commits since version source"
-    value: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
 
 runs:
   using: "composite"
   # Defining the action steps
   steps:
-    # Install and calculate the new version with GitVersion  
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.10.2
-      with:
-        versionSpec: 5.x
-
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v0.10.2
-      id: gitversion # Step id used as reference for output values
-
-    - name: Display GitVersion outputs
-      run: |
-        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
-        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
-      shell: bash
-    
     - name: Use .NET Core sdk 7.x
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 7.x
-
-    - name: 'Restore packages'
-      run: dotnet restore ${{ inputs.libraryPath }}
-      shell: bash
-
+        
     - name: 'Build project'
-      run: dotnet build ${{ inputs.libraryPath }} --no-restore --configuration Release
+      run: dotnet build ${{ inputs.libraryPath }} --configuration Release
       shell: bash
 
-    - name: Run Unit Tests
+    - name: Run unit tests
       run: dotnet test ${{ inputs.testsPath }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
       continue-on-error: true
       shell: bash
@@ -70,13 +36,3 @@ runs:
       with:
         name: code-coverage
         path: ${{ inputs.testsResultsPath }}/*/coverage.cobertura.xml
-
-    - name: Build and Pack NuGet package
-      run: dotnet pack ${{ inputs.libraryPath }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
-      shell: bash
-
-    - name: Upload NuGet package to GitHub
-      uses: actions/upload-artifact@v3
-      with:
-        name: ${{ inputs.artifactName }}
-        path: ${{ inputs.dllPath }}
