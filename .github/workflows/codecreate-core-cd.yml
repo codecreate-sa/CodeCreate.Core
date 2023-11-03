@@ -40,6 +40,12 @@ jobs:
         testsResultsPath: ${{ env.TESTS_RESULTS_PATH }}
         artifactName: ${{ env.ARTIFACT_NAME }}
         dllPath: ${{ env.DLL_PATH }}
+
+    - run: echo commitsSinceVersionSource ${{ steps.buildPackage.outputs.commitsSinceVersionSource }}
+      shell: bash
+
+    - run: echo buildPackageVersion ${{ steps.buildPackage.outputs.buildPackageVersion }}
+      shell: bash
         
   releasePackage:
     name: releasePackage
