@@ -41,7 +41,7 @@ runs:
       if: ${{ inputs.commitsSinceVersionSource }} > 0 # Only release if there has been a commit/version change  
       uses: ncipollo/release-action@v1
       with:
-        tag: '0.2.2'
-        name: 'Release 0.2.2'
+        tag: ${{ inputs.buildPackageVersion }}
+        name: Release ${{ inputs.buildPackageVersion }}
         artifacts: "${{ inputs.artifactName }}/*"
         token: ${{ inputs.password }}
