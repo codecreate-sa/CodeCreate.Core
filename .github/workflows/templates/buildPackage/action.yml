@@ -19,6 +19,14 @@ inputs:
     description: 'The path to the dll'
     required: true
 
+outputs:
+  buildPackageVersion:
+    description: "The version of the build package"
+    value: ${{ steps.gitversion.outputs.SemVer }}
+  commitsSinceVersionSource:
+    description: "The number of commits since version source"
+    value: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
+
 runs:
   using: "composite"
   # Defining the action steps

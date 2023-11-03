@@ -31,8 +31,9 @@ jobs:
         fetch-depth: 0 # fetch-depth is needed for GitVersion
 
     - name: buildPackage
+      id: buildPackage
       uses: "./.github/workflows/templates/buildPackage" # Just need to pass the path from action
-       # Defining the variables required in our action
+      # Defining the variables required in our action
       with:
         libraryPath: ${{ env.LIBRARY_PATH }}
         testsPath: ${{ env.TESTS_PATH }}
@@ -57,5 +58,5 @@ jobs:
         username: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_USERNAME }}
         password: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_PASSWORD }}
         artifactName: ${{ env.ARTIFACT_NAME }}
-        commitsSinceVersionSource: ${{ needs.buildPackage.outputs.CommitsSinceVersionSource }}
-        buildPackageVersion: ${{ needs.buildPackage.outputs.Version }}
+        commitsSinceVersionSource: ${{ steps.buildPackage.outputs.commitsSinceVersionSource }}
+        buildPackageVersion: ${{ steps.buildPackage.outputs.buildPackageVersion }}
