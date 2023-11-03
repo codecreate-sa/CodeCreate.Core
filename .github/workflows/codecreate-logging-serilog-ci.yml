@@ -1,6 +1,7 @@
 name: codecreate-logging-serilog-ci
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
