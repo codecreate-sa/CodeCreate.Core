@@ -39,8 +39,6 @@ runs:
 
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0.10.2
-      with:
-        additionalArguments: '/showConfig'
       id: gitversion # Step id used as reference for output values
 
     - name: Display GitVersion outputs
