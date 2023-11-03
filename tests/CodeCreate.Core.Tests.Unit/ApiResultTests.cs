@@ -38,7 +38,7 @@ namespace CodeCreate.Core.Tests.Unit
 
             result.Successful.Should().BeFalse();
             result.EventId.Should().Be(100);
-            result.ErrorText.Should().Be("error");
+            result.ErrorText.Should().Be("error2");
             result.Code.Should().Be(ResultCode.BadGateway);
         }
 
