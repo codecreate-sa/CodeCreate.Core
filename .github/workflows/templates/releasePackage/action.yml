@@ -15,7 +15,7 @@ inputs:
   commitsSinceVersionSource: 
     description: 'Number of commits since version source'
     required: true
-  version:
+  buildPackageVersion:
     description: 'The build package version'
     required: true
 
@@ -41,7 +41,7 @@ runs:
       if: ${{ inputs.commitsSinceVersionSource }} > 0 # Only release if there has been a commit/version change  
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ inputs.version }}
-        name: Release ${{ inputs.version }}
+        tag: ${{ inputs.buildPackageVersion }}
+        name: Release ${{ inputs.buildPackageVersion }}
         artifacts: "${{ inputs.artifactName }}/*"
         token: ${{ inputs.password }}

@@ -58,4 +58,4 @@ jobs:
         password: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_PASSWORD }}
         artifactName: ${{ env.ARTIFACT_NAME }}
         commitsSinceVersionSource: ${{ needs.buildPackage.outputs.CommitsSinceVersionSource }}
-        version: ${{ needs.buildPackage.outputs.Version }}
+        buildPackageVersion: ${{ needs.buildPackage.outputs.Version }}
