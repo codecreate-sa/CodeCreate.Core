@@ -1,0 +1,33 @@
+name: codecreate-aspnetcore-ci
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'lib/CodeCreate.AspNetCore/**'
+      - 'tests/CodeCreate.AspNetCore.Tests.Unit/**'
+
+env:
+  LIBRARY_PATH: 'lib/CodeCreate.AspNetCore/CodeCreate.AspNetCore.csproj'
+  TESTS_PATH: 'tests/CodeCreate.AspNetCore.Tests.Unit/CodeCreate.AspNetCore.Tests.Unit.csproj'
+  TESTS_RESULTS_PATH: 'tests/CodeCreate.AspNetCore.Tests.Unit/TestResults'
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest 
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+        
+    - name: buildPackage
+      id: buildPackage
+      uses: "./.github/workflows/templates/buildPackage" # Just need to pass the path from action
+      # Defining the variables required in our action
+      with:
+        libraryPath: ${{ env.LIBRARY_PATH }}
+        testsPath: ${{ env.TESTS_PATH }}
+        testsResultsPath: ${{ env.TESTS_RESULTS_PATH }}

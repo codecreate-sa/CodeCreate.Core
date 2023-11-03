@@ -33,11 +33,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{4D43
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{538C42F2-189F-4AE5-92FB-46CBE0899128}"
 	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codecreate-aspnetcore-cd.yml = .github\workflows\codecreate-aspnetcore-cd.yml
+		.github\workflows\codecreate-aspnetcore-ci.yml = .github\workflows\codecreate-aspnetcore-ci.yml
 		.github\workflows\codecreate-core-cd.yml = .github\workflows\codecreate-core-cd.yml
 		.github\workflows\codecreate-core-ci.yml = .github\workflows\codecreate-core-ci.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "templates", "templates", "{A7F52840-E9BC-49AD-9DEA-7C85830B0E57}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\codecreate-aspnetcore-cd.yml = .github\workflows\codecreate-aspnetcore-cd.yml
+		.github\workflows\codecreate-aspnetcore-ci.yml = .github\workflows\codecreate-aspnetcore-ci.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packPackage", "packPackage", "{BD76CBF4-9063-4478-B39A-C47D9A487558}"
 	ProjectSection(SolutionItems) = preProject

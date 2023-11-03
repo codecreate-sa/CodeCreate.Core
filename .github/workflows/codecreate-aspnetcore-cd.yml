@@ -1,18 +1,19 @@
 name: codecreate-core-cd
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
-      - 'lib/CodeCreate.Core/**'
+      - 'lib/CodeCreate.AspNetCore/**'
 
 env:
-  DLL_PATH: 'lib/CodeCreate.Core/bin/Release'
-  LIBRARY_PATH: 'lib/CodeCreate.Core/CodeCreate.Core.csproj'
-  TESTS_PATH: 'tests/CodeCreate.Core.Tests.Unit/CodeCreate.Core.Tests.Unit.csproj'
-  TESTS_RESULTS_PATH: 'tests/CodeCreate.Core.Tests.Unit/TestResults'
-  ARTIFACT_NAME: 'codeCreateCorePackage'
+  DLL_PATH: 'lib/CodeCreate.AspNetCore/bin/Release'
+  LIBRARY_PATH: 'lib/CodeCreate.AspNetCore/CodeCreate.AspNetCore.csproj'
+  TESTS_PATH: 'tests/CodeCreate.AspNetCore.Tests.Unit/CodeCreate.AspNetCore.Tests.Unit.csproj'
+  TESTS_RESULTS_PATH: 'tests/CodeCreate.AspNetCore.Tests.Unit/TestResults'
+  ARTIFACT_NAME: 'codeCreateAspNetCorePackage'
 
 jobs:
   preparePackage:
