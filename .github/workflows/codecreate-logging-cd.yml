@@ -11,8 +11,6 @@ on:
 env:
   DLL_PATH: 'lib/CodeCreate.Logging/bin/Release'
   LIBRARY_PATH: 'lib/CodeCreate.Logging/CodeCreate.Logging.csproj'
-  TESTS_PATH: 'tests/CodeCreate.Logging.Tests.Unit/CodeCreate.Logging.Tests.Unit.csproj'
-  TESTS_RESULTS_PATH: 'tests/CodeCreate.Logging.Tests.Unit/TestResults'
   ARTIFACT_NAME: 'codeCreateLoggingPackage'
 
 jobs:
@@ -35,8 +33,6 @@ jobs:
       # Defining the variables required in our action
       with:
         libraryPath: ${{ env.LIBRARY_PATH }}
-        testsPath: ${{ env.TESTS_PATH }}
-        testsResultsPath: ${{ env.TESTS_RESULTS_PATH }}
         artifactName: ${{ env.ARTIFACT_NAME }}
         dllPath: ${{ env.DLL_PATH }}
         

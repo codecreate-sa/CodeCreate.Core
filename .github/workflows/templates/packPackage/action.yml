@@ -8,10 +8,10 @@ inputs:
     required: true
   testsPath:
     description: 'The path to the unit tests .csproj file guarding the library'
-    required: true
+    required: false
   testsResultsPath:
     description: 'The path to the unit tests results folder'
-    required: true
+    required: false
   artifactName:
     description: 'The build artifact name'
     required: true
@@ -57,11 +57,13 @@ runs:
       shell: bash
 
     - name: Run unit tests
+      if: "${{ inputs.testsPath != '' }}"
       run: dotnet test ${{ inputs.testsPath }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
       continue-on-error: false
       shell: bash
 
     - name: Publish Code Coverage Report
+      if: "${{ inputs.testsPath != '' }}"
       uses: actions/upload-artifact@v2
       with:
         name: code-coverage
