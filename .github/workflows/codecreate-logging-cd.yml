@@ -1,7 +1,6 @@
 name: codecreate-logging-cd
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
