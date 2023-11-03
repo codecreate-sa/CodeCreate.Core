@@ -28,6 +28,12 @@ runs:
       with:
         name: ${{ inputs.artifactName }}
 
+    - run: echo commitsSinceVersionSource ${{ inputs.commitsSinceVersionSource }}
+      shell: bash
+
+    - run: echo buildPackageVersion ${{ inputs.buildPackageVersion }}
+      shell: bash
+
     - name: Prep package
       run: dotnet nuget add source --username ${{ inputs.username }} --password ${{ inputs.password }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/codecreate-sa/index.json"
       shell: bash
