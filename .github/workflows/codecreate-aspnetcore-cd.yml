@@ -1,4 +1,4 @@
-name: codecreate-core-cd
+name: codecreate-aspnetcore-cd
 
 on:
   workflow_dispatch:
