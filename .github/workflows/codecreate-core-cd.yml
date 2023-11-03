@@ -40,6 +40,12 @@ jobs:
         testsResultsPath: ${{ env.TESTS_RESULTS_PATH }}
         artifactName: ${{ env.ARTIFACT_NAME }}
         dllPath: ${{ env.DLL_PATH }}
+
+    - run: echo commitsSinceVersionSource ${{ steps.buildPackage.outputs.commitsSinceVersionSource }}
+      shell: bash
+
+    - run: echo buildPackageVersion ${{ steps.buildPackage.outputs.buildPackageVersion }}
+      shell: bash
         
   releasePackage:
     name: releasePackage
@@ -51,6 +57,12 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2
       
+    - run: echo commitsSinceVersionSource ${{ needs.buildPackage.outputs.commitsSinceVersionSource }}
+      shell: bash
+
+    - run: echo buildPackageVersion ${{ needs.buildPackage.outputs.buildPackageVersion }}
+      shell: bash
+
     - name: releasePackage
       uses: "./.github/workflows/templates/releasePackage" # Just need to pass the path from action
        # Defining the variables required in our action
