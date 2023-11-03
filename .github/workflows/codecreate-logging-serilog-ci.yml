@@ -1,14 +1,14 @@
-name: codecreate-logging-ci
+name: codecreate-logging-serilog-ci
 
 on:
   pull_request:
     branches:
       - main
     paths:
-      - 'lib/CodeCreate.Logging/**'
+      - 'lib/CodeCreate.Logging.Serilog/**'
 
 env:
-  LIBRARY_PATH: 'lib/CodeCreate.Logging/CodeCreate.Logging.csproj'
+  LIBRARY_PATH: 'lib/CodeCreate.Logging.Serilog/CodeCreate.Logging.Serilog.csproj'
 
 jobs:
   build:

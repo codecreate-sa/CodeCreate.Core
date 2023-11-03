@@ -1,14 +1,15 @@
-name: codecreate-logging-ci
+name: codecreate-logging-aspnetcore-ci
 
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - main
     paths:
-      - 'lib/CodeCreate.Logging/**'
+      - 'lib/CodeCreate.Logging.AspNetCore/**'
 
 env:
-  LIBRARY_PATH: 'lib/CodeCreate.Logging/CodeCreate.Logging.csproj'
+  LIBRARY_PATH: 'lib/CodeCreate.Logging.AspNetCore/CodeCreate.Logging.AspNetCore.csproj'
 
 jobs:
   build:

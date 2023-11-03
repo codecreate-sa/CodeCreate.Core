@@ -1,0 +1,57 @@
+name: codecreate-logging-aspnetcore-cd
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'lib/CodeCreate.Logging.AspNetCore/**'
+
+env:
+  DLL_PATH: 'lib/CodeCreate.Logging.AspNetCore/bin/Release'
+  LIBRARY_PATH: 'lib/CodeCreate.Logging.AspNetCore/CodeCreate.Logging.AspNetCore.csproj'
+  ARTIFACT_NAME: 'codeCreateLoggingPackage'
+
+jobs:
+  preparePackage:
+    name: preparePackage
+    runs-on: ubuntu-latest 
+    outputs: 
+      buildPackageVersion: ${{ steps.packPackage.outputs.buildPackageVersion }}
+      commitsSinceVersionSource: ${{ steps.packPackage.outputs.commitsSinceVersionSource }}
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0 # fetch-depth is needed for GitVersion
+
+    - name: packPackage
+      id: packPackage
+      uses: "./.github/workflows/templates/packPackage" # Just need to pass the path from action
+      # Defining the variables required in our action
+      with:
+        libraryPath: ${{ env.LIBRARY_PATH }}
+        artifactName: ${{ env.ARTIFACT_NAME }}
+        dllPath: ${{ env.DLL_PATH }}
+        
+  releasePackage:
+    name: releasePackage
+    runs-on: ubuntu-latest    
+    needs: preparePackage
+    if: github.ref == 'refs/heads/main' # Only run job if on the main branch   
+    
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: releasePackage
+      uses: "./.github/workflows/templates/releasePackage" # Just need to pass the path from action
+       # Defining the variables required in our action
+      with:
+        username: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_USERNAME }}
+        password: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_PASSWORD }}
+        artifactName: ${{ env.ARTIFACT_NAME }}
+        commitsSinceVersionSource: ${{ needs.preparePackage.outputs.commitsSinceVersionSource }}
+        buildPackageVersion: ${{ needs.preparePackage.outputs.buildPackageVersion }}
