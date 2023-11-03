@@ -1,7 +1,7 @@
 ﻿namespace CodeCreate.Logging
 {
     /// <summary>
-    /// 
+    ///  
     /// </summary>
     public class LogEntry
     {

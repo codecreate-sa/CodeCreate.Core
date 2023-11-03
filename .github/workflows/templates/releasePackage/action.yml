@@ -12,12 +12,6 @@ inputs:
   artifactName:
     description: 'The build artifact name'
     required: true
-  commitsSinceVersionSource: 
-    description: 'The number of commits since version source'
-    required: true
-  buildPackageVersion:
-    description: 'The build package version'
-    required: true
 
 runs:
   using: "composite"
@@ -33,15 +27,5 @@ runs:
       shell: bash
 
     - name: Push package to GitHub packages
-      if: ${{ inputs.commitsSinceVersionSource }} > 0 # Only release if there has been a commit/version change  
       run: dotnet nuget push ${{ inputs.artifactName }}/*.nupkg --api-key ${{ inputs.password }} --source "github"
       shell: bash
-
-    - name: Create Release
-      if: ${{ inputs.commitsSinceVersionSource }} > 0 # Only release if there has been a commit/version change  
-      uses: ncipollo/release-action@v1
-      with:
-        tag: ${{ inputs.buildPackageVersion }}
-        name: Release ${{ inputs.buildPackageVersion }}
-        artifacts: "${{ inputs.artifactName }}/*"
-        token: ${{ inputs.password }}

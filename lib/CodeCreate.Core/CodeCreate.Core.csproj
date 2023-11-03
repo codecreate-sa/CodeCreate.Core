@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>false</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Version>1.0.1</Version>
+    <Version>1.0.0</Version>
     <PackageId>CodeCreate.Core</PackageId>
     <Authors>codecreate-sa</Authors>
     <Company>CodeCreate</Company>

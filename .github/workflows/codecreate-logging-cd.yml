@@ -15,10 +15,7 @@ env:
 jobs:
   preparePackage:
     name: preparePackage
-    runs-on: ubuntu-latest 
-    outputs: 
-      buildPackageVersion: ${{ steps.packPackage.outputs.buildPackageVersion }}
-      commitsSinceVersionSource: ${{ steps.packPackage.outputs.commitsSinceVersionSource }}
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout Code
@@ -52,5 +49,3 @@ jobs:
         username: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_USERNAME }}
         password: ${{ secrets.CODECREATE_GH_PACKAGE_SOURCE_PASSWORD }}
         artifactName: ${{ env.ARTIFACT_NAME }}
-        commitsSinceVersionSource: ${{ needs.preparePackage.outputs.commitsSinceVersionSource }}
-        buildPackageVersion: ${{ needs.preparePackage.outputs.buildPackageVersion }}

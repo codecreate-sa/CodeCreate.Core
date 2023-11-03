@@ -9,7 +9,7 @@ using CodeCreate.Logging.Serilog.Constants;
 namespace CodeCreate.Logging.Serilog
 {
     /// <summary>
-    /// 
+    ///  
     /// </summary>
     public static class MsSqlServerSinkFactory
     {

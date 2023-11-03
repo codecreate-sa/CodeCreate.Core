@@ -1,7 +1,7 @@
 ﻿namespace CodeCreate.AspNetCore
 {
     /// <summary>
-    /// 
+    ///  
     /// </summary>
     public static class Constants
     {

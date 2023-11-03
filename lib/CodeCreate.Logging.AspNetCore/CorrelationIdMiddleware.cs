@@ -6,7 +6,7 @@ using CodeCreate.Logging.AspNetCore.Constants;
 namespace CodeCreate.Logging.AspNetCore
 {
     /// <summary>
-    /// 
+    ///  
     /// </summary>
     public class CorrelationIdMiddleware
     {

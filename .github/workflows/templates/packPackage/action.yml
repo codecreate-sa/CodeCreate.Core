@@ -18,35 +18,11 @@ inputs:
   dllPath:
     description: 'The path to the release version of the dll'
     required: true
-
-outputs:
-  buildPackageVersion:
-    description: "The version of the build package"
-    value: ${{ steps.gitversion.outputs.SemVer }}
-  commitsSinceVersionSource:
-    description: "The number of commits since version source"
-    value: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
-
+    
 runs:
   using: "composite"
   # Defining the action steps
   steps:
-    # Install and calculate the new version with GitVersion  
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v0.10.2
-      with:
-        versionSpec: 5.x
-
-    - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v0.10.2
-      id: gitversion # Step id used as reference for output values
-
-    - name: Display GitVersion outputs
-      run: |
-        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
-        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
-      shell: bash
-    
     - name: Use .NET Core sdk 7.x
       uses: actions/setup-dotnet@v1
       with:
