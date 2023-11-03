@@ -70,7 +70,7 @@ runs:
         path: ${{ inputs.testsResultsPath }}/*/coverage.cobertura.xml
 
     - name: Build and Pack NuGet package
-      run: dotnet pack ${{ inputs.libraryPath }} -p:Version='${{ steps.gitversion.outputs.SemVer }}' -c Release
+      run: dotnet pack ${{ inputs.libraryPath }} -c Release
       shell: bash
 
     - name: Upload NuGet package to GitHub

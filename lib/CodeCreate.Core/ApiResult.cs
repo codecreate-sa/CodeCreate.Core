@@ -76,7 +76,7 @@ namespace CodeCreate.Core
         }
 
         /// <summary>
-        ///  
+        /// 
         /// </summary>
         /// <param name="result"></param>
         /// <typeparam name="Y"></typeparam>
