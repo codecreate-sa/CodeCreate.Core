@@ -1,6 +1,7 @@
 name: codecreate-core-cd
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
