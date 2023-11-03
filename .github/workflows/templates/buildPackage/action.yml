@@ -28,7 +28,7 @@ runs:
 
     - name: Run unit tests
       run: dotnet test ${{ inputs.testsPath }} --configuration release --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
-      continue-on-error: true
+      continue-on-error: false
       shell: bash
 
     - name: Publish Code Coverage Report
