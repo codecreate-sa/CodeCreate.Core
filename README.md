@@ -1,5 +1,15 @@
 # CodeCreate.Core
 
+## Packages
+
+| Name | Status | Package URL |
+|:--|:--|:--|
+| CodeCreate.Core | [![codecreate-core-cd](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-core-cd.yml/badge.svg)](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-core-cd.yml) | [CodeCreate.Core](https://github.com/codecreate-sa/CodeCreate.Core/pkgs/nuget/CodeCreate.Core) |
+| CodeCreate.AspNetCore | [![codecreate-aspnetcore-cd](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-aspnetcore-cd.yml/badge.svg)](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-aspnetcore-cd.yml) | [CodeCreate.AspNetCore](https://github.com/codecreate-sa/CodeCreate.Core/pkgs/nuget/CodeCreate.AspNetCore) |
+| CodeCreate.Logging | [![codecreate-logging-cd](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-logging-cd.yml/badge.svg)](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-logging-cd.yml) | [CodeCreate.Logging](https://github.com/codecreate-sa/CodeCreate.Core/pkgs/nuget/CodeCreate.Logging) |
+| CodeCreate.Logging.AspNetCore | [![codecreate-logging-aspnetcore-cd](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-logging-aspnetcore-cd.yml/badge.svg)](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-logging-aspnetcore-cd.yml) | [CodeCreate.Logging.AspNetCore](https://github.com/codecreate-sa/CodeCreate.Core/pkgs/nuget/CodeCreate.Logging.AspNetCore) |
+| CodeCreate.Logging.Serilog | [![codecreate-logging-serilog-cd](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-logging-serilog-cd.yml/badge.svg)](https://github.com/codecreate-sa/CodeCreate.Core/actions/workflows/codecreate-logging-serilog-cd.yml) | [CodeCreate.Logging.Serilog](https://github.com/codecreate-sa/CodeCreate.Core/pkgs/nuget/CodeCreate.Logging.Serilog) |
+
 ## GitHub Actions
 
 | Name | Status | GH Action | Description |
