@@ -1,6 +1,6 @@
 # CodeCreate.Core
 
-## Packages
+## Package details
 
 | Name | Status | Package URL |
 |:--|:--|:--|
