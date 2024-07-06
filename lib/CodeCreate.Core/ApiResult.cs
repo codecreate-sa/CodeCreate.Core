@@ -88,12 +88,18 @@ namespace CodeCreate.Core
         }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException">when data is null and T is not object</exception>
         public static ApiResult<T> CreateSuccessful(T? data)
         {
+            if (data is null && typeof(T) != typeof(object))
+            {
+                throw new ArgumentNullException(nameof(data));
+            }
+            
             return new ApiResult<T>()
             {
                 Data = data,

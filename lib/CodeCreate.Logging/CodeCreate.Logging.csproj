@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>false</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Version>1.0.0</Version>
@@ -10,6 +10,7 @@
     <Company>CodeCreate</Company>
     <PackageDescription>The CodeCreate.Logging library</PackageDescription>
     <RepositoryUrl>https://github.com/codecreate-sa/CodeCreate.Core</RepositoryUrl>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
