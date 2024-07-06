@@ -62,6 +62,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "buildPackage", "buildPackag
 		.github\workflows\templates\buildPackage\action.yml = .github\workflows\templates\buildPackage\action.yml
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeCreate.Messaging", "lib\CodeCreate.Messaging\CodeCreate.Messaging.csproj", "{B3873033-E7E1-45AB-984A-4FE4023D2F0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,10 @@ Global
 		{26096EE1-B118-45AE-BB45-5BCBA90797FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26096EE1-B118-45AE-BB45-5BCBA90797FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26096EE1-B118-45AE-BB45-5BCBA90797FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3873033-E7E1-45AB-984A-4FE4023D2F0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3873033-E7E1-45AB-984A-4FE4023D2F0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3873033-E7E1-45AB-984A-4FE4023D2F0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3873033-E7E1-45AB-984A-4FE4023D2F0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +119,7 @@ Global
 		{BD76CBF4-9063-4478-B39A-C47D9A487558} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
 		{E0BFC67B-3D39-42D8-8A2A-A9A63E971F21} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
 		{AB4A577C-6697-4BDA-BAC1-74647683427E} = {A7F52840-E9BC-49AD-9DEA-7C85830B0E57}
+		{B3873033-E7E1-45AB-984A-4FE4023D2F0F} = {061890F2-16E3-4106-AD5C-FBBA168DF34C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4AA8B55C-42AC-4CD6-9FBE-678A76AF5259}
