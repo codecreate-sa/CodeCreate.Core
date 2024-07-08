@@ -1,5 +1,7 @@
 namespace CodeCreate.Messaging
 {
+    using System;
+
     using Microsoft.Extensions.DependencyInjection;
 
     using EasyNetQ;
@@ -16,13 +18,13 @@ namespace CodeCreate.Messaging
         /// <param name="services"></param>
         /// <param name="rabbitConnectionString"></param>
         /// <returns></returns>
-        public static IServiceCollection AddMessaging(this IServiceCollection services,
-            string rabbitConnectionString)
+        public static IServiceCollection AddMessaging<TPump>(this IServiceCollection services,
+            string rabbitConnectionString) where TPump : MessagePumpBase
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(rabbitConnectionString);
 
             services.AddSingleton<IMessageBus, RabbitMqMessageBus>();
-            services.AddSingleton<IMessagePump, MessagePump>();
+            services.AddSingleton<IMessagePump, TPump>();
 
             services.AddSingleton<IBus>(_ =>
             {

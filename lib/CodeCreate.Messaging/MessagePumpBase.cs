@@ -1,38 +1,31 @@
 namespace CodeCreate.Messaging
 {
+    using System;
+    using System.Threading.Tasks;
+    using System.Collections.Generic;
+
     using CodeCreate.Events;
 
     /// <summary>
     ///
     /// </summary>
-    public class MessagePump : IMessagePump, IDisposable
+    public abstract class MessagePumpBase : IMessagePump, IDisposable
     {
         /// <summary>
         ///
         /// </summary>
-        private readonly static TimeSpan EventLifetime = TimeSpan.FromDays(1); //tbd
-
-        /// <summary>
-        ///
-        /// </summary>
-        private readonly static TimeSpan EventRetryDelay = TimeSpan.FromHours(1); //tbd
+        public virtual TimeSpan DefaultEventRetryDelay => TimeSpan.FromHours(1);
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="event"></param>
         /// <returns></returns>
-        private static TimeSpan GetRetryDelay(IEvent @event) =>
+        public virtual TimeSpan GetRetryDelay(IEvent @event) =>
             @event.EventTypeId switch
             {
-                _ => EventRetryDelay
+                _ => DefaultEventRetryDelay
             };
-
-        /// <summary>
-        ///
-        /// </summary>
-        private readonly static IReadOnlySet<int> _shouldAlertByMail =
-            new HashSet<int>();
 
         /// <summary>
         ///
@@ -47,21 +40,14 @@ namespace CodeCreate.Messaging
         /// <summary>
         ///
         /// </summary>
-        private readonly IServiceProvider _serviceProvider;
-
-        /// <summary>
-        ///
-        /// </summary>
         public bool Started { get; private set; }
 
         /// <summary>
         ///
         /// </summary>
-        public MessagePump(IMessageBus bus,
-            IServiceProvider serviceProvider)
+        protected MessagePumpBase(IMessageBus bus)
         {
             _bus = bus;
-            _serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -85,16 +71,26 @@ namespace CodeCreate.Messaging
             Started = true;
             
             _subscribers ??= [];
-            
-            //todo expose subscriber config
-            _subscribers.Add(_bus.Subscribe<IEvent>(async @event =>
+
+            foreach (var subscriber in GetSubscriberConfig())
             {
-                if (!await DispatchAsync(@event))
-                {
-                    await _bus.PublishAsync(@event, GetRetryDelay(@event));
-                }
-            }));
+                _subscribers.Add(_bus.Subscribe<IEvent>(
+                    subscriber.SubscriberId, subscriber.Topic,
+                    async @event =>
+                    {
+                        if (!await DispatchAsync(@event))
+                        {
+                            await _bus.PublishAsync(@event, @event.Topic, GetRetryDelay(@event));
+                        }
+                    }));
+            }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public abstract IEnumerable<SubscriberConfig> GetSubscriberConfig();
 
         /// <summary>
         ///
@@ -109,27 +105,7 @@ namespace CodeCreate.Messaging
         /// </summary>
         /// <param name="event"></param>
         /// <returns></returns>
-        public Task<bool> DispatchAsync(IEvent @event)
-        {
-            ArgumentNullException.ThrowIfNull(@event);
-
-            if (DateTime.UtcNow.Subtract(@event.CreatedUtc) > EventLifetime)
-            {
-                //log timeout
-                return Task.FromResult(true);
-            }
-
-            if (@event.EventTypeId == EventTypeId.Invalid)
-            {
-                // log
-                return Task.FromResult(true);
-            }
-
-            return @event.EventTypeId switch
-            {
-                _ => Task.FromResult(true)
-            };
-        }
+        public abstract Task<bool> DispatchAsync(IEvent @event);
 
         /// <summary>
         ///

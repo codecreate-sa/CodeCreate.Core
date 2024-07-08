@@ -4,36 +4,26 @@ namespace CodeCreate.Events
 
     public class Event<T> : IEvent<T> where T : IEventData
     {
-        /// <summary>
-        ///
-        /// </summary>
         public T? EventData { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
+        public string? Topic { get; set; } //tbd
+
         public DateTime CreatedUtc { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
+
         public string? CorrelationId { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
+
         public EventTypeId EventTypeId { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
+
         public Event()
         {
             CreatedUtc = DateTime.UtcNow;
         }
 
         /// <summary>
-        ///
+        /// 
         /// </summary>
         /// <param name="typeId"></param>
         /// <param name="data"></param>
@@ -55,14 +45,8 @@ namespace CodeCreate.Events
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     public class Event : Event<IEventData>, IEvent
     {
-        /// <summary>
-        ///
-        /// </summary>
         public Event() : base()
         {
         }

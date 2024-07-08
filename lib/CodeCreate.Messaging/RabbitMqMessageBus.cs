@@ -1,7 +1,10 @@
-using EasyNetQ;
-
 namespace CodeCreate.Messaging
 {
+    using System;
+    using System.Threading.Tasks;
+
+    using EasyNetQ;
+
     /// <summary>
     /// 
     /// </summary>
@@ -31,26 +34,7 @@ namespace CodeCreate.Messaging
         public bool Publish<T>(T message, TimeSpan? delay = null)
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(message);
-
-            try
-            {
-                if (delay is null)
-                {
-                    _bus.PubSub.Publish(message);
-                }
-                else
-                {
-                    _bus.Scheduler.FuturePublish(message, delay.Value);
-                }
-            }
-            catch (Exception e)
-            {
-                // log?
-                return false;
-            }
-
-            return true;
+            return PublishInternal(message, null, delay);
         }
 
         /// <summary>
@@ -61,30 +45,12 @@ namespace CodeCreate.Messaging
         /// <param name="delay"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public bool Publish<T>(T message, string topic, TimeSpan? delay = null)
+        public bool Publish<T>(T message, string? topic, TimeSpan? delay = null)
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(message);
             ArgumentException.ThrowIfNullOrWhiteSpace(topic);
 
-            try
-            {
-                if (delay is null)
-                {
-                    _bus.PubSub.Publish(message, topic);
-                }
-                else
-                {
-                    _bus.Scheduler.FuturePublish(message, delay.Value, topic);
-                }
-            }
-            catch (Exception e)
-            {
-                // log?
-                return false;
-            }
-
-            return true;
+            return PublishInternal(message, topic, delay);
         }
 
         /// <summary>
@@ -97,52 +63,15 @@ namespace CodeCreate.Messaging
         public async Task<bool> PublishAsync<T>(T message, TimeSpan? delay = null)
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(message);
-
-            try
-            {
-                if (delay is null)
-                {
-                    await _bus.PubSub.PublishAsync(message);
-                }
-                else
-                {
-                    await _bus.Scheduler.FuturePublishAsync(message, delay.Value);
-                }
-            }
-            catch (Exception e)
-            {
-                // log
-                return false;
-            }
-
-            return true;
+            return await PublishInternalAsync(message, null, delay);
         }
 
-        public async Task<bool> PublishAsync<T>(T message, string topic, TimeSpan? delay = null)
+        public async Task<bool> PublishAsync<T>(T message, string? topic, TimeSpan? delay = null)
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(message);
             ArgumentException.ThrowIfNullOrWhiteSpace(topic);
 
-            try
-            {
-                if (delay is null)
-                {
-                    await _bus.PubSub.PublishAsync(message, topic);
-                }
-                else
-                {
-                    await _bus.Scheduler.FuturePublishAsync(message, delay.Value, c => c.WithTopic(topic));
-                }
-            }
-            catch (Exception e)
-            {
-                // log
-                return false;
-            }
-
-            return true;
+            return await PublishInternalAsync(message, topic, delay);
         }
 
         /// <summary>
@@ -154,43 +83,125 @@ namespace CodeCreate.Messaging
         public IDisposable Subscribe<T>(Func<T, Task> onMessage)
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(onMessage);
-
-            return _bus.PubSub.Subscribe("default", onMessage);
+            return SubscribeInternal("default", null, onMessage);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subscriptionId"></param>
+        /// <param name="subscriberId"></param>
         /// <param name="onMessage"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IDisposable Subscribe<T>(string subscriptionId, Func<T, Task> onMessage)
+        public IDisposable Subscribe<T>(string subscriberId, Func<T, Task> onMessage)
             where T : class
         {
-            ArgumentNullException.ThrowIfNull(onMessage);
-            ArgumentException.ThrowIfNullOrWhiteSpace(subscriptionId);
-
-            return _bus.PubSub.Subscribe("default", onMessage);
+            return SubscribeInternal(subscriberId, null, onMessage);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subscriptionId"></param>
+        /// <param name="subscriberId"></param>
         /// <param name="topic"></param>
         /// <param name="onMessage"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public IDisposable Subscribe<T>(string subscriptionId, string topic, Func<T, Task> onMessage)
+        public IDisposable Subscribe<T>(string subscriberId, string? topic, Func<T, Task> onMessage)
+            where T : class
+        {
+            return SubscribeInternal(subscriberId, topic, onMessage);
+        }
+
+        private IDisposable SubscribeInternal<T>(string subscriberId, string? topic, Func<T, Task> onMessage)
             where T : class
         {
             ArgumentNullException.ThrowIfNull(onMessage);
-            ArgumentException.ThrowIfNullOrWhiteSpace(topic);
-            ArgumentException.ThrowIfNullOrWhiteSpace(subscriptionId);
+            ArgumentException.ThrowIfNullOrWhiteSpace(subscriberId);
 
-            return _bus.PubSub.Subscribe<T>(subscriptionId, (x, _) => onMessage(x), x => x.WithTopic(topic));
+            if (string.IsNullOrWhiteSpace(topic))
+            {
+                return _bus.PubSub.Subscribe(subscriberId, onMessage);
+            }
+
+            return _bus.PubSub.Subscribe<T>(subscriberId, (x, _) => onMessage(x), x => x.WithTopic(topic));
+        }
+
+        private bool PublishInternal<T>(T message, string? topic, TimeSpan? delay = null)
+        {
+            ArgumentNullException.ThrowIfNull(message);
+
+            try
+            {
+                if (delay is null)
+                {
+                    if (string.IsNullOrWhiteSpace(topic))
+                    {
+                        _bus.PubSub.Publish(message);
+                    }
+                    else
+                    {
+                        _bus.PubSub.Publish(message, topic);
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(topic))
+                    {
+                        _bus.Scheduler.FuturePublish(message, delay.Value);
+                    }
+                    else
+                    {
+                        _bus.Scheduler.FuturePublish(message, delay.Value, topic);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // log?
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<bool> PublishInternalAsync<T>(T message, string? topic, TimeSpan? delay = null)
+            where T : class
+        {
+            ArgumentNullException.ThrowIfNull(message);
+
+            try
+            {
+                if (delay is null)
+                {
+                    if (string.IsNullOrWhiteSpace(topic))
+                    {
+                        await _bus.PubSub.PublishAsync(message);
+                    }
+                    else
+                    {
+                        await _bus.PubSub.PublishAsync(message, topic);
+                    }
+                }
+                else
+                {
+                    if (string.IsNullOrWhiteSpace(topic))
+                    {
+                        await _bus.Scheduler.FuturePublishAsync(message, delay.Value);
+                    }
+                    else
+                    {
+                        await _bus.Scheduler.FuturePublishAsync(message, delay.Value, c => c.WithTopic(topic));
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // log
+                return false;
+            }
+
+            return true;
         }
     }
 }

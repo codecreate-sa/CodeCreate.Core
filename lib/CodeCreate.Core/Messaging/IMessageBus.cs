@@ -26,7 +26,7 @@ namespace CodeCreate.Messaging
         /// <param name="delay"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        bool Publish<T>(T message, string topic, TimeSpan? delay = null)
+        bool Publish<T>(T message, string? topic, TimeSpan? delay = null)
             where T : class;
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace CodeCreate.Messaging
         /// <param name="delay"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        Task<bool> PublishAsync<T>(T message, string topic, TimeSpan? delay = null)
+        Task<bool> PublishAsync<T>(T message, string? topic, TimeSpan? delay = null)
             where T : class;
 
         /// <summary>
@@ -62,22 +62,22 @@ namespace CodeCreate.Messaging
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subscriptionId"></param>
+        /// <param name="subscriberId"></param>
         /// <param name="onMessage"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IDisposable Subscribe<T>(string subscriptionId, Func<T, Task> onMessage)
+        IDisposable Subscribe<T>(string subscriberId, Func<T, Task> onMessage)
             where T : class;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="subscriptionId"></param>
+        /// <param name="subscriberId"></param>
         /// <param name="topic"></param>
         /// <param name="onMessage"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        IDisposable Subscribe<T>(string subscriptionId, string topic, Func<T, Task> onMessage)
+        IDisposable Subscribe<T>(string subscriberId, string? topic, Func<T, Task> onMessage)
             where T : class;
     }
 }
