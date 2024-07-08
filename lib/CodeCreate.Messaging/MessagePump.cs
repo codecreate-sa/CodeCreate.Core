@@ -85,6 +85,8 @@ namespace CodeCreate.Messaging
             Started = true;
             
             _subscribers ??= [];
+            
+            //todo expose subscriber config
             _subscribers.Add(_bus.Subscribe<IEvent>(async @event =>
             {
                 if (!await DispatchAsync(@event))
